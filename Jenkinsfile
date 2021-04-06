@@ -1,10 +1,13 @@
-
-    peline {
-    agent any
+pipeline {
+    agent {
+        docker {
+            image 'maven:3.6-openjdk-8'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
     stages {
         stage('Build') {
             steps {
-                checkout scm
                 sh "mvn package"
             }
             post {
@@ -30,4 +33,4 @@
             }
         }
     }
-}sed -e "s|52.66.203.78|$(curl -fSsL http://169.254.169.254/latest/meta-data/public-ipv4)|g" -i /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
+}
